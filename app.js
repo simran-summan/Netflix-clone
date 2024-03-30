@@ -39,26 +39,46 @@ const fetchCallingFunction = async (url, title) => {
     let row = document.querySelector("#row");
     let comdeyRow = document.createElement("div");
     let heading = document.createElement("h2");
-    let mainRow = document.createElement('div')
     heading.innerText = title;
-    heading.className = 'row-title'
+    heading.className = "row-title";
     comdeyRow.className = "posters-row";
-    mainRow.appendChild(heading)
-    // row.appendChild(mainRow);
+    row.appendChild(heading);
 
-    console.log(row);
+    // console.log(row);
 
     data?.results?.forEach((ele) => {
-      let posters = document.createElement("img");
-      posters.id = "image";
-      posters.src = banner_url + ele.backdrop_path;
-        posters.classList.add('poster')
-        // console.log(ele);
-      comdeyRow.appendChild(posters)
+      let posters = document.createElement("div");
+      posters.className = "image-container";
+      let image = document.createElement("img");
+      image.className = "image";
+      image.src = banner_url + ele.backdrop_path;
+      posters.appendChild(image);
+      // posters.classList.add('poster')
+      // console.log(ele);
+      let detailsContainer = document.createElement("div");
+      detailsContainer.className = "details-container";
+
+      // Additional details
+      let title = document.createElement("h3");
+      title.textContent = ele.title || ele.name;
+      let overview = document.createElement("p");
+      overview.textContent = ele.overview;
+      detailsContainer.appendChild(title);
+      // detailsContainer.appendChild(overview);
+
+      // Button
+      let button = document.createElement("button");
+      button.textContent = "Play";
+      posters.appendChild(detailsContainer);
+      detailsContainer.appendChild(button);
+
+      
+      console.log(comdeyRow);
+      comdeyRow.appendChild(posters);
       
     });
-    mainRow.appendChild(comdeyRow);
-    row.appendChild(mainRow)
+    
+    row.appendChild(comdeyRow);
   } catch (error) {
     console.log("an error haas occured:", error);
   }
